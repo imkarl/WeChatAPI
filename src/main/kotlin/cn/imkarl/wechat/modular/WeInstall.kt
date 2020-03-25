@@ -6,6 +6,7 @@ import cn.imkarl.core.common.security.EncryptUtils
 import cn.imkarl.utils.CmdUtils
 import cn.imkarl.wechat.internal.WeListener
 import java.io.File
+import java.io.FileNotFoundException
 
 object WeInstall {
 
@@ -39,9 +40,32 @@ object WeInstall {
      * 启动微信
      */
     fun launch(): Boolean {
+        val runDir = if (AppUtils.isJarRun) FileUtils.getResourceRootFile().parentFile else FileUtils.getResourceRootFile()
+
+        // 检查依赖文件是否存在
+        val injectExeFile = File(runDir, "Inject.exe")
+        if (!injectExeFile.exists()) {
+            throw FileNotFoundException("找不到 ${injectExeFile.name} 文件，请复制该文件到当前运行目录【由于hook程序容易被杀软报毒，请先关闭杀软 或 加入白名单，以避免文件被删】")
+        } else if ("34dd746f58dbefd822ae5b182f62c9b3" != EncryptUtils.md5(injectExeFile)?.toLowerCase()) {
+            throw IllegalAccessException("文件 ${injectExeFile.name} 可能被损坏【正确的文件MD5：34dd746f58dbefd822ae5b182f62c9b3】")
+        }
+
+        val weBinderDllFile = File(runDir, "WeBinder.dll")
+        if (!weBinderDllFile.exists()) {
+            throw FileNotFoundException("找不到 ${weBinderDllFile.name} 文件，请复制该文件到当前运行目录【由于hook程序容易被杀软报毒，请先关闭杀软 或 加入白名单，以避免文件被删】")
+        } else if ("c8b98c2fbbfb7d2a74213738970e7a67" != EncryptUtils.md5(weBinderDllFile)?.toLowerCase()) {
+            throw IllegalAccessException("文件 ${weBinderDllFile.name} 可能被损坏【正确的文件MD5：c8b98c2fbbfb7d2a74213738970e7a67】")
+        }
+
+        val weHelperDllFile = File(runDir, "WeHelper.dll")
+        if (!weHelperDllFile.exists()) {
+            throw FileNotFoundException("找不到 ${weHelperDllFile.name} 文件，请复制该文件到当前运行目录【由于hook程序容易被杀软报毒，请先关闭杀软 或 加入白名单，以避免文件被删】")
+        } else if ("7bfaf5adc131de6e6b5a7c39cc7c7fbc" != EncryptUtils.md5(weHelperDllFile)?.toLowerCase()) {
+            throw IllegalAccessException("文件 ${weHelperDllFile.name} 可能被损坏【正确的文件MD5：7bfaf5adc131de6e6b5a7c39cc7c7fbc】")
+        }
+
         // 启动微信
 //        WeBinder.INSTANCE.StartWeChat(WString(File(getInstallDir(), "WeChat.exe").absolutePath), WString(File(runDir, "WeHelper.dll").absolutePath))
-        val runDir = if (AppUtils.isJarRun) FileUtils.getResourceRootFile().parentFile else FileUtils.getResourceRootFile()
         val openExeFile = File(runDir,"Inject.exe")
         CmdUtils.exec("cmd /c \"${openExeFile.absolutePath}\"", runDir)
 
