@@ -20,7 +20,7 @@ object WeUserModule {
     private var accountInfo: WxMessage.AccountInfo? = null
 
     /**
-     * 请求获取登录账户信息
+     * 获取登录账户信息
      */
     suspend fun getAccountInfo(): WxMessage.AccountInfo {
         if (accountInfo == null) {
