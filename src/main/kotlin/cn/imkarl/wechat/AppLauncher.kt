@@ -5,6 +5,7 @@ import cn.imkarl.core.common.log.LogUtils
 import cn.imkarl.wechat.message.SourceType
 import cn.imkarl.wechat.message.TransferPayType
 import cn.imkarl.wechat.message.WxMessage
+import cn.imkarl.wechat.modular.WeInstall
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +24,12 @@ object AppLauncher {
 
 
         GlobalScope.launch {
+
+            val osType = We.install.getOSType()
+            LogUtils.d("osType: $osType")
+            if (osType != WeInstall.OSType.WINDOWS) {
+                throw IllegalStateException("不支持的操作系统，请在 Windows 下使用")
+            }
 
             val weChatInstallDir = We.install.getInstallDir()
             LogUtils.d("weChatInstallDir: $weChatInstallDir")
@@ -60,11 +67,11 @@ object AppLauncher {
             delay(1000)
 
             // 获取账户信息
-            val accountInfo = We.userinfo.getAccountInfo()
+            val accountInfo = We.user.getAccountInfo()
             LogUtils.d("accountInfo: $accountInfo")
 
             // 获取好友列表
-            val friends = We.userinfo.getFriends()
+            val friends = We.user.getFriends()
             LogUtils.d("friends: $friends")
 
             We.message.setOnReceiveMessageListener { message ->
@@ -86,8 +93,8 @@ object AppLauncher {
                 SourceType.FriendChat,
                 SourceType.FileHelper -> {
                     // 自动回复
-                    val sendUserInfo = We.userinfo.getFriends().firstOrNull { it.wxid == message.senderUserId } ?: return
-                    We.message.sendTextMessage(message.senderUserId, "你是【${sendUserInfo.nickName}】，你给我发了一条【${message.content::class.simpleName}】消息")
+                    val sendUserInfo = We.user.getFriends().firstOrNull { it.wxid == message.senderUserId } ?: return
+                    We.message.sendTextMessage(message.senderUserId, "你是【${sendUserInfo.nickname}】，你给我发了一条【${message.content::class.simpleName}】消息")
                 }
             }
         }
@@ -99,6 +106,13 @@ object AppLauncher {
                 // 自动接受转账
                 We.transfer.requestReciveTransfer(message.wxid!!, message.transferId!!)
             }
+        }
+        if (message is WxMessage.RequestAddFriend) {
+            // 延迟处理，避免微信限制
+            delay((100 + Random.nextInt(1000)).toLong())
+
+            // 自动接受好友请求
+            We.user.agreeAddFriend(message.v1!!, message.v2!!)
         }
     }
 

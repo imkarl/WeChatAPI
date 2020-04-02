@@ -15,11 +15,15 @@ object OriginalMesageProcessor {
 
         var msgContent: WxMessage.ChatMessage.MsgContent? = null
         when (originalMessage.type) {
-            0x01 -> {
-                // "文字"
+            1 -> {
+                // 文字
                 msgContent = WxMessage.ChatMessage.TextMsgContent(originalMessage.content)
             }
-            0x31 -> {
+            10000 -> {
+                // 系统提示消息：文字
+                msgContent = WxMessage.ChatMessage.TextMsgContent(originalMessage.content)
+            }
+            49 -> {
                 if (originalMessage.content.contains("<title><![CDATA[微信转账]]></title>")) {
                     // 转账
                     val reciveMoneyMessage = XmlUtils.fromXml<XmlMessage.MessageRoot>(originalMessage.content)
@@ -80,9 +84,35 @@ object OriginalMesageProcessor {
                 }
 
             }
+            37 -> {
+                if (sourceType == SourceType.FriendMessage
+                    && originalMessage.content.contains("encryptusername=\"v1_")
+                    && originalMessage.content.contains("ticket=\"v2_")) {
+                    // 请求添加好友
+                    val xmlMessage = XmlUtils.fromXml<XmlMessage.MessageRoot>(originalMessage.content)
+                    val requestAddFriend = WxMessage.RequestAddFriend(
+                        xmlMessage?.fromWxid,
+                        xmlMessage?.fromAliasName,
+                        xmlMessage?.fromNickName,
+                        xmlMessage?.country,
+                        xmlMessage?.province,
+                        xmlMessage?.city,
+                        Gender.parse(xmlMessage?.sex),
+                        xmlMessage?.slogan,
+                        xmlMessage?.snsBackgroundImageUrl,
+                        xmlMessage?.headImageUrl,
+                        xmlMessage?.opcode,
+                        xmlMessage?.encryptUserName,
+                        xmlMessage?.ticket,
+                        xmlMessage?.content
+                    )
+                    return requestAddFriend
+                }
+
+            }
             else -> {
                 // 其他
-                LogUtils.println(LogLevel.INFO, originalMessage.toString())
+                LogUtils.i(originalMessage.toString())
             }
         }
 
@@ -128,6 +158,11 @@ object OriginalMesageProcessor {
             // 文件助手
             originalMessage.wxid.toLowerCase() == "filehelper" -> {
                 SourceType.FileHelper
+            }
+
+            // 系统好友消息
+            originalMessage.wxid.toLowerCase() == "fmessage" -> {
+                SourceType.FriendMessage
             }
 
             // 以gh_开头，则说明是公众号

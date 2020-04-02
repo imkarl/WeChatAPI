@@ -14,10 +14,7 @@ internal interface WeBinder : Library {
         }
     }
 
-    fun OpenApp(appFile: WString, appDir: WString): Int
     fun ExecCommand(command: Int): Int
-    fun ExecCommand2(command: Int, wxid: WString, msg: WString): Int
-    fun StartWeChat(wechatExeFile: WString, dllFile: WString): Int
-    fun SendChatMessage(type: Int, wxid: WString, msg: WString): Int
+    fun ExecCommand2(command: Int, msg1: WString, msg2: WString): Int
 
 }

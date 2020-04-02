@@ -69,7 +69,7 @@ internal object WeListener {
                 WMCopyData.WM_GetFriendList -> {
                     lpData?.let {
                         val userInfo: WMMessage.UserInfo = JnaStructure.newInstance(lpData)
-                        friends.add(WxMessage.UserInfo(userInfo.UserNumber, userInfo.UserId, userInfo.UserNickName, userInfo.UserRemark))
+                        friends.add(WxMessage.UserInfo(userInfo.UserId, userInfo.UserNumber, userInfo.UserNickName, userInfo.UserRemark))
                     }
                 }
 

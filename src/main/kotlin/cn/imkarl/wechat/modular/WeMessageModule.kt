@@ -19,7 +19,7 @@ object WeMessageModule {
      */
     fun setOnReceiveMessageListener(listener: (WxMessage)->Unit) {
         WeListener.onReceiveMessage = { originalMesage ->
-            LogUtils.d("onReceiveMessage: $originalMesage")
+            //LogUtils.d("onReceiveMessage: $originalMesage")
             val message = OriginalMesageProcessor.process(originalMesage)
             if (message != null) {
                 listener.invoke(message)
@@ -31,7 +31,7 @@ object WeMessageModule {
      * 发送文本消息
      */
     fun sendTextMessage(wxid: String, message: String): Boolean {
-        val result = WeBinder.INSTANCE.SendChatMessage(WMCopyData.WM_SendTextMessage.code, WString(wxid), WString(message))
+        val result = WeBinder.INSTANCE.ExecCommand2(WMCopyData.WM_SendTextMessage.code, WString(wxid), WString(message))
         return result == 0
     }
 
@@ -39,7 +39,7 @@ object WeMessageModule {
      * 发送图片消息
      */
     fun sendImageMessage(wxid: String, imageFile: File): Boolean {
-        val result = WeBinder.INSTANCE.SendChatMessage(WMCopyData.WM_SendImageMessage.code, WString(wxid), WString(imageFile.absolutePath))
+        val result = WeBinder.INSTANCE.ExecCommand2(WMCopyData.WM_SendImageMessage.code, WString(wxid), WString(imageFile.absolutePath))
         return result == 0
     }
 
@@ -47,7 +47,7 @@ object WeMessageModule {
      * 发送文件消息
      */
     fun sendFileMessage(wxid: String, file: File): Boolean {
-        val result = WeBinder.INSTANCE.SendChatMessage(WMCopyData.WM_SendFileMessage.code, WString(wxid), WString(file.absolutePath))
+        val result = WeBinder.INSTANCE.ExecCommand2(WMCopyData.WM_SendFileMessage.code, WString(wxid), WString(file.absolutePath))
         return result == 0
     }
 

@@ -10,7 +10,7 @@ object We {
     val install = WeInstall
     val login = WeLoginModule
     val message = WeMessageModule
-    val userinfo = WeUserModule
+    val user = WeUserModule
     val group = WeGroupModule
     val transfer = WeTransferModule
 

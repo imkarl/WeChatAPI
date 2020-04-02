@@ -14,6 +14,8 @@ enum class SourceType {
     FriendChat,
     @SerializedName("4")
     Subscription,
+    @SerializedName("5")
+    FriendMessage,
     @SerializedName("0")
     Unknown;
 }

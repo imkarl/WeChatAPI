@@ -1,7 +1,7 @@
 package cn.imkarl.wechat.message
 
 import cn.imkarl.core.common.json.JsonUtils
-import com.google.gson.annotations.SerializedName
+import javax.xml.bind.annotation.XmlAttribute
 import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlRootElement
 
@@ -148,8 +148,84 @@ sealed class XmlMessage {
         @JvmField
         var fromUserName: String? = null
 
+        @XmlAttribute(name = "fromusername")
+        @JvmField
+        var fromWxid: String? = null
+
+        @XmlAttribute(name = "fromnickname")
+        @JvmField
+        var fromNickName: String? = null
+
+        @XmlAttribute(name = "alias")
+        @JvmField
+        var fromAliasName: String? = null
+
+        @XmlAttribute(name = "weibo")
+        @JvmField
+        var weibo: String? = null
+
+        @XmlAttribute(name = "bigheadimgurl")
+        @JvmField
+        var headImageUrl: String? = null
+
+        @XmlAttribute(name = "snsbgimgid")
+        @JvmField
+        var snsBackgroundImageUrl: String? = null
+
+        @XmlAttribute(name = "mhash")
+        @JvmField
+        var mhash: String? = null
+
+        @XmlAttribute(name = "mfullhash")
+        @JvmField
+        var mfullhash: String? = null
+
+        @XmlAttribute(name = "content")
+        @JvmField
+        var content: String? = null
+
+        @XmlAttribute(name = "imagestatus")
+        @JvmField
+        var imageStatus: Int? = null
+
+        @XmlAttribute(name = "scene")
+        @JvmField
+        var scene: Int? = null
+
+        @XmlAttribute(name = "country")
+        @JvmField
+        var country: String? = null
+
+        @XmlAttribute(name = "province")
+        @JvmField
+        var province: String? = null
+
+        @XmlAttribute(name = "city")
+        @JvmField
+        var city: String? = null
+
+        @XmlAttribute(name = "sign")
+        @JvmField
+        var slogan: String? = null
+
+        @XmlAttribute(name = "sex")
+        @JvmField
+        var sex: Int? = null
+
+        @XmlAttribute(name = "opcode")
+        @JvmField
+        var opcode: Int? = null
+
+        @XmlAttribute(name = "encryptusername")
+        @JvmField
+        var encryptUserName: String? = null
+
+        @XmlAttribute(name = "ticket")
+        @JvmField
+        var ticket: String? = null
+
         override fun toString(): String {
-            return "WxReciveMoneyMessage${JsonUtils.toJson(this)}"
+            return "MessageRoot${JsonUtils.toJson(this)}"
         }
 
     }

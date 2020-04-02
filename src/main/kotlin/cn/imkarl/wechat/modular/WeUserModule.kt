@@ -5,6 +5,8 @@ import cn.imkarl.wechat.message.Gender
 import cn.imkarl.wechat.message.WxMessage
 import cn.imkarl.wechat.internal.WeBinder
 import cn.imkarl.wechat.internal.WeListener
+import cn.imkarl.wechat.message.WMCopyData
+import com.sun.jna.WString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
@@ -57,6 +59,13 @@ object WeUserModule {
      */
     fun getFriends(): List<WxMessage.UserInfo> {
         return WeListener.getFriends()
+    }
+
+    /**
+     * 同意添加好友
+     */
+    fun agreeAddFriend(v1: String, v2: String) {
+        WeBinder.INSTANCE.ExecCommand2(WMCopyData.WM_AgreeAddFriend.code, WString(v1), WString(v2))
     }
 
 }

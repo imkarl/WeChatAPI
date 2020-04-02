@@ -11,6 +11,10 @@ import java.io.FileNotFoundException
 
 object WeInstall {
 
+    enum class OSType {
+        WINDOWS, LINUX, MACOSX, UNKNOWN
+    }
+
     private val VERSIONs by lazy {
         return@lazy hashMapOf(
             "a49a3e22519d5c2bf8d7bd0be0045151" to "2.6.8.52"
@@ -23,16 +27,31 @@ object WeInstall {
     private val WeBinderDllFileMD5s by lazy {
         return@lazy arrayOf(
             "c8b98c2fbbfb7d2a74213738970e7a67",
-            "8131221eca3ca3b7a61cb43eb3e3190d"
+            "8131221eca3ca3b7a61cb43eb3e3190d",
+            "c7ebdc203d13692ff2cce98faa0e5552"
         )
     }
     private val WeHelperDllFileMD5s by lazy {
         return@lazy arrayOf(
             "7bfaf5adc131de6e6b5a7c39cc7c7fbc",
-            "32c895042f05cd5898f04e5c4a5674f9"
+            "32c895042f05cd5898f04e5c4a5674f9",
+            "bf3dbda8e64f7e252eb0ea1f93446033"
         )
     }
 
+
+    /**
+     * 获取当前系统类型
+     */
+    fun getOSType(): OSType {
+        val osName = System.getProperty("os.name")?.toLowerCase() ?: return OSType.UNKNOWN
+        return when {
+            osName.contains("windows") -> OSType.WINDOWS
+            osName.contains("linux") -> OSType.LINUX
+            osName.contains("os x") -> OSType.MACOSX
+            else -> OSType.UNKNOWN
+        }
+    }
 
     /**
      * 获取微信安装目录
@@ -87,8 +106,7 @@ object WeInstall {
 
         // 启动微信
 //        WeBinder.INSTANCE.StartWeChat(WString(File(getInstallDir(), "WeChat.exe").absolutePath), WString(File(runDir, "WeHelper.dll").absolutePath))
-        val openExeFile = File(runDir,"Inject.exe")
-        CmdUtils.exec("cmd /c \"${openExeFile.absolutePath}\"", runDir)
+        CmdUtils.exec("cmd /c \"${injectExeFile.absolutePath}\"", runDir)
 
         // 启动监听器
         WeListener.start()

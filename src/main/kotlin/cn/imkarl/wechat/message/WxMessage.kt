@@ -6,9 +6,9 @@ sealed class WxMessage {
      * 用户信息结构体
      */
     data class UserInfo(
-        var uid: String = "",   // 微信ID
-        var wxid: String = "",  // 微信号
-        var nickName: String = "",  // 昵称
+        var wxid: String = "",  // 微信ID
+        var account: String = "",   // 微信账号
+        var nickname: String = "",  // 昵称
         var remark: String = ""  // 备注
     ) : WxMessage()
 
@@ -85,5 +85,25 @@ sealed class WxMessage {
             val fileUrl: String
         ) : MsgContent
     }
+
+    /**
+     * 请求添加好友
+     */
+    data class RequestAddFriend(
+        val wxid: String?,
+        val account: String?,
+        val nickname: String?,
+        val country: String?,
+        val province: String?,
+        val city: String?,
+        val sex: Gender,
+        val slogan: String?,
+        val snsBackgroundImageUrl: String?,
+        val headImageUrl: String?,
+        val opcode: Int?,
+        val v1: String?,
+        val v2: String?,
+        val requestContent: String?  // 申请内容文本
+    ) : WxMessage()
 
 }
