@@ -2,10 +2,10 @@ package cn.imkarl.wechat
 
 import cn.imkarl.core.common.app.AppUtils
 import cn.imkarl.core.common.log.LogUtils
+import cn.imkarl.utils.OSType
 import cn.imkarl.wechat.message.SourceType
 import cn.imkarl.wechat.message.TransferPayType
 import cn.imkarl.wechat.message.WxMessage
-import cn.imkarl.wechat.modular.WeInstall
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,9 +25,9 @@ object AppLauncher {
 
         GlobalScope.launch {
 
-            val osType = We.install.getOSType()
+            val osType = OSType.getOSType()
             LogUtils.d("osType: $osType")
-            if (osType != WeInstall.OSType.WINDOWS) {
+            if (osType != OSType.WINDOWS) {
                 throw IllegalStateException("不支持的操作系统，请在 Windows 下使用")
             }
 

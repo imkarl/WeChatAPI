@@ -11,10 +11,6 @@ import java.io.FileNotFoundException
 
 object WeInstall {
 
-    enum class OSType {
-        WINDOWS, LINUX, MACOSX, UNKNOWN
-    }
-
     private val VERSIONs by lazy {
         return@lazy hashMapOf(
             "a49a3e22519d5c2bf8d7bd0be0045151" to "2.6.8.52"
@@ -40,18 +36,6 @@ object WeInstall {
     }
 
 
-    /**
-     * 获取当前系统类型
-     */
-    fun getOSType(): OSType {
-        val osName = System.getProperty("os.name")?.toLowerCase() ?: return OSType.UNKNOWN
-        return when {
-            osName.contains("windows") -> OSType.WINDOWS
-            osName.contains("linux") -> OSType.LINUX
-            osName.contains("os x") -> OSType.MACOSX
-            else -> OSType.UNKNOWN
-        }
-    }
 
     /**
      * 获取微信安装目录
