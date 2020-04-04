@@ -29,7 +29,8 @@ object WeInstall {
     private val WeHelperDllFileMD5s by lazy {
         return@lazy arrayOf(
             "bf3dbda8e64f7e252eb0ea1f93446033",
-            "cd7e70b9326f3830bd758e5c8a0adaab"
+            "cd7e70b9326f3830bd758e5c8a0adaab",
+            "98efadf643c243c7c7db266243fb4e1a"
         )
     }
 

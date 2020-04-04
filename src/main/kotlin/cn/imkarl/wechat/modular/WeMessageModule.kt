@@ -7,6 +7,9 @@ import cn.imkarl.wechat.internal.WeListener
 import cn.imkarl.wechat.message.WMCopyData
 import cn.imkarl.wechat.message.WxMessage
 import com.sun.jna.WString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -19,10 +22,12 @@ object WeMessageModule {
      */
     fun setOnReceiveMessageListener(listener: (WxMessage)->Unit) {
         WeListener.onReceiveMessage = { originalMesage ->
-            //LogUtils.d("onReceiveMessage: $originalMesage")
-            val message = OriginalMesageProcessor.process(originalMesage)
-            if (message != null) {
-                listener.invoke(message)
+            GlobalScope.launch(Dispatchers.IO) {
+                //LogUtils.d("onReceiveMessage: $originalMesage")
+                val message = OriginalMesageProcessor.process(originalMesage)
+                if (message != null) {
+                    listener.invoke(message)
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-# WeChatApi
+# WeChatAPI
 
 ## 一、已支持功能清单
 
@@ -31,6 +31,7 @@
 #### We.group
 
 - 设置群公告
+- 添加群成员
 
 #### We.transfer
 
@@ -40,7 +41,7 @@
 ## 二、使用步骤
 
 - 安装对应版本的微信客户端
-- 编译WeChatApi，启动:cn.imkarl.wechat.AppLauncher
+- 编译WeChatAPI，启动:cn.imkarl.wechat.AppLauncher
 
 ## 三、声明
 

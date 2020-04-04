@@ -1,8 +1,8 @@
 package cn.imkarl.wechat.internal
 
-import cn.imkarl.core.common.log.LogLevel
 import cn.imkarl.core.common.log.LogUtils
 import cn.imkarl.utils.XmlUtils
+import cn.imkarl.wechat.We
 import cn.imkarl.wechat.message.*
 
 /**
@@ -10,7 +10,7 @@ import cn.imkarl.wechat.message.*
  */
 object OriginalMesageProcessor {
 
-    fun process(originalMessage: WMMessage.WxReceiveOriginalMessage): WxMessage? {
+    suspend fun process(originalMessage: WMMessage.WxReceiveOriginalMessage): WxMessage? {
         val sourceType = getSourceType(originalMessage)
 
         var msgContent: WxMessage.ChatMessage.MsgContent? = null
@@ -138,7 +138,12 @@ object OriginalMesageProcessor {
 
                 // 群聊
                 SourceType.GroupChat -> {
-                    message = WxMessage.ChatMessage(originalMessage.wxid, originalMessage.msgSender, sourceType, msgContent)
+                    var senderWxid = originalMessage.msgSender
+                    if (senderWxid.isBlank()) {
+                        // 没有发送者ID，说明是自己发送的
+                        senderWxid = We.user.getAccountInfo().wxid ?: ""
+                    }
+                    message = WxMessage.ChatMessage(originalMessage.wxid, senderWxid, sourceType, msgContent)
                 }
 
                 // 好友
