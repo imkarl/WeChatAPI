@@ -160,7 +160,7 @@ object OriginalMesageProcessor {
                 SourceType.FileHelper
             }
 
-            // 系统好友消息
+            // 系统好友消息（朋友推荐消息）
             originalMessage.wxid.toLowerCase() == "fmessage" -> {
                 SourceType.FriendMessage
             }

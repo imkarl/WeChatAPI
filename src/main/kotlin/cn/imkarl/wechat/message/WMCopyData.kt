@@ -19,6 +19,7 @@ enum class WMCopyData(val code: Int) {
     WM_IsLogin(1001),
     WM_NotLogin(1002),
     WM_AgreeAddFriend(1004),
+    WM_AddGroupMember(1005),
     ;
 
     companion object {

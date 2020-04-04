@@ -22,16 +22,14 @@ object WeInstall {
     }
     private val WeBinderDllFileMD5s by lazy {
         return@lazy arrayOf(
-            "c8b98c2fbbfb7d2a74213738970e7a67",
-            "8131221eca3ca3b7a61cb43eb3e3190d",
-            "c7ebdc203d13692ff2cce98faa0e5552"
+            "c7ebdc203d13692ff2cce98faa0e5552",
+            "1fa147c3dbe9b6893e8a0d26b2b3f232"
         )
     }
     private val WeHelperDllFileMD5s by lazy {
         return@lazy arrayOf(
-            "7bfaf5adc131de6e6b5a7c39cc7c7fbc",
-            "32c895042f05cd5898f04e5c4a5674f9",
-            "bf3dbda8e64f7e252eb0ea1f93446033"
+            "bf3dbda8e64f7e252eb0ea1f93446033",
+            "cd7e70b9326f3830bd758e5c8a0adaab"
         )
     }
 

@@ -39,11 +39,99 @@ sealed class XmlMessage {
         override fun toString(): String {
             return "AppMsg${JsonUtils.toJson(this)}"
         }
+/*
+<title>
+    <![CDATA[微信支付收款0.01元(朋友到店)]]>
+</title>
+<des>
+    <![CDATA[收款金额￥0.01
+收款方备注测试一下收款码
+付款方备注测试固定金额的收款码
+汇总今日第2笔收款，共计￥0.02
+备注收款成功，已存入零钱。点击可查看详情]]>
+</des>
+<type>5</type>
+<showtype>1</showtype>
+<mmreader>
+</mmreader>
+<template_id>
+    <![CDATA[ey45ZWkUmYUBk_fMgxBLvyaFqVop1rmoWLFd62OXGiU]]>
+</template_id>
+ */
     }
 
     data class Remarks @JvmOverloads constructor(
         @XmlElement(name = "template_detail")
         var template_detail: RemarkDetail? = null
+/*
+<category type="0" count="1">
+    <name>
+        <![CDATA[微信支付]]>
+    </name>
+    <topnew>
+        <digest>
+            <![CDATA[收款金额￥0.01
+收款方备注测试一下收款码
+付款方备注测试固定金额的收款码
+汇总今日第2笔收款，共计￥0.02
+备注收款成功，已存入零钱。点击可查看详情]]>
+        </digest>
+    </topnew>
+    <item>
+        <itemshowtype>4</itemshowtype>
+        <title>
+            <![CDATA[收款到账通知]]>
+        </title>
+        <pub_time>1579323997</pub_time>
+        <digest>
+            <![CDATA[收款金额￥0.01
+收款方备注测试一下收款码
+付款方备注测试固定金额的收款码
+汇总今日第2笔收款，共计￥0.02
+备注收款成功，已存入零钱。点击可查看详情]]>
+        </digest>
+        <fileid>0</fileid>
+        <sources>
+            <source>
+                <name>
+                    <![CDATA[微信支付]]>
+                </name>
+            </source>
+        </sources>
+        <del_flag>0</del_flag>
+        <contentattr>0</contentattr>
+        <template_op_type>1</template_op_type>
+        <weapp_username>
+            <![CDATA[gh_fac0ad4c321d@app]]>
+        </weapp_username>
+        <appmsg_like_type>0</appmsg_like_type>
+        <is_pay_subscribe>0</is_pay_subscribe>
+    </item>
+</category>
+<publisher>
+    <username>
+        <![CDATA[wxzhifu]]>
+    </username>
+    <nickname>
+        <![CDATA[微信支付]]>
+    </nickname>
+</publisher>
+<template_header>
+    <title>
+        <![CDATA[收款到账通知]]>
+    </title>
+    <pub_time>1579323997</pub_time>
+    <hide_title_and_time>1</hide_title_and_time>
+    <show_icon_and_display_name>0</show_icon_and_display_name>
+    <hide_icon_and_display_name_line>1</hide_icon_and_display_name_line>
+    <ignore_hide_title_and_time>1</ignore_hide_title_and_time>
+    <hide_time>1</hide_time>
+    <pay_style>1</pay_style>
+</template_header>
+<template_detail>
+</template_detail>
+<forbid_forward>0</forbid_forward>
+ */
     )
 
     class RemarkDetail {
@@ -54,6 +142,21 @@ sealed class XmlMessage {
         override fun toString(): String {
             return "RemarkDetail(content=$content)"
         }
+/*
+<template_show_type>1</template_show_type>
+<opitems>
+    <opitem>
+        <word>
+            <![CDATA[收款小账本]]>
+        </word>
+        <weapp_username>
+            <![CDATA[gh_fac0ad4c321d@app]]>
+        </weapp_username>
+        <op_type>1</op_type>
+    </opitem>
+    <show_type>1</show_type>
+</opitems>
+ */
     }
 
     class RemarkDetailContent {
@@ -229,5 +332,36 @@ sealed class XmlMessage {
         }
 
     }
+
+
+/*
+    // 地理位置
+    data class LocationInfo(
+        @SerializedName("x")
+        val x: Double?,
+        @SerializedName("y")
+        val y: Double?,
+        @SerializedName("scale")
+        val scale: Double?,
+        @SerializedName("label")
+        val label: String?,
+        @SerializedName("poiid")
+        val poiId: String?,
+        @SerializedName("poiname")
+        val poiName: String?,
+        @SerializedName("maptype")
+        val mapType: Int?
+    ) : ClientProtocol(50)
+
+    // 共享实时位置
+    data class SyncLocationInfo(
+        @SerializedName("type")
+        val type: Int?,
+        @SerializedName("title")
+        val title: String?,
+        @SerializedName("from_wxid", alternate = ["fromusername"])
+        val fromWxid: String?
+    ) : ClientProtocol(51)
+*/
 
 }
